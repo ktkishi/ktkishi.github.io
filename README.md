@@ -1,6 +1,6 @@
 ### Welcome to Kenji's site.
 Snake game!!!!!
 
-### Snakegame
-[SNAKE GAME!!!](snakegame.html).
+### Snake Gaem
+[SNAKE GAME!!!](snakegame.html)
 
