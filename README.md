@@ -2,5 +2,5 @@
 Snake game!!!!!
 
 ### Snakegame
-[How to create slideshows from iPython notebooks](slideshow-creation.slides.html).
+[SNAKE GAME!!!](snakegame.html).
 
