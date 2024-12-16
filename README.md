@@ -6,6 +6,7 @@ Snake game!!!!!
 
 snake game v1.2
 -Added beautiful pink background to replace drab grey
+-Added beautiful green to add some zap to the boring colours
 -Qol updates
 
 
