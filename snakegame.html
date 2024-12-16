@@ -6,7 +6,7 @@
   <title>Snake Game</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: Comic Sans MS, cursive;
       text-align: center;
       background-color: #f0f0f0;
       margin: 0;
@@ -33,7 +33,7 @@
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
 
-    const boxSize = 20; // Size of each grid square
+    const boxSize = 10; // Size of each grid square
     let snake = [{ x: 200, y: 200 }]; // Snake starts in the middle
     let food = randomFood(); // Food starts at a random position
     let direction = "RIGHT"; // Starting direction
