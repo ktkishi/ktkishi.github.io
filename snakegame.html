@@ -14,7 +14,6 @@
       background-size: 100% 100%;
       margin: 0;
       padding: 0;
-      transition: background-image 0.5s ease;
     }
 
     h1 {
@@ -28,23 +27,42 @@
       display: block;
       margin: 20px auto;
     }
+
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('alex_face.jpg') no-repeat center center/cover;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0s linear 0.5s;
+      z-index: 1;
+    }
+
+    #gameContainer {
+      position: relative;
+      z-index: 0;
+    }
   </style>
 </head>
 <body>
-  <h1>Pain and Suffering</h1>
-  <canvas id="gameCanvas" width="400" height="400"></canvas>
+  <div id="overlay"></div>
+  <div id="gameContainer">
+    <h1>Pain and Suffering</h1>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+  </div>
   <script>
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
+    const overlay = document.getElementById("overlay");
 
     const boxSize = 10; // Size of each grid square
     let snake = [{ x: 200, y: 200 }]; // Snake starts in the middle
     let food = randomFood(); // Food starts at a random position
     let direction = "RIGHT"; // Starting direction
     let score = 0;
-
-    const defaultBackground = 'url("kenji_face.JPG")'; // Default background
-    const scoreBackground = 'url("alex_face.jpg")'; // New background on scoring
 
     // Generate random food position
     function randomFood() {
@@ -90,7 +108,7 @@
       if (head.x === food.x && head.y === food.y) {
         score++;
         food = randomFood(); // Generate new food
-        changeBackground(); // Temporarily change background
+        showOverlay(); // Show overlay temporarily
       } else {
         snake.pop(); // Remove the tail if no food is eaten
       }
@@ -128,14 +146,17 @@
       if (key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
     });
 
-    // Temporarily change background
-    function changeBackground() {
-      document.body.style.backgroundImage = scoreBackground; // Set the new background
+    // Show overlay temporarily
+    function showOverlay() {
+      overlay.style.visibility = "visible";
+      overlay.style.opacity = "1";
+
       setTimeout(() => {
-        document.body.style.backgroundImage = defaultBackground; // Reset to default after 1 second
-      }, 1000); // 1 second delay
+        overlay.style.opacity = "0";
+        overlay.style.visibility = "hidden";
+      }, 1000); // Show for 1 second
     }
-    
+
     // Run the game loop
     function gameLoop() {
       update();
@@ -146,4 +167,3 @@
   </script>
 </body>
 </html>
-
