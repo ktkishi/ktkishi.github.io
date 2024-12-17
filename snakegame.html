@@ -34,7 +34,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: url('alex_face.jpg') no-repeat center center/cover;
+      background: no-repeat center center/cover;
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.5s ease, visibility 0s linear 0.5s;
@@ -57,6 +57,22 @@
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
     const overlay = document.getElementById("overlay");
+
+    // List of overlay images
+    const overlayImages = [
+      'alex_face.jpg',
+      'kenji.JPG',
+      'cold_gosi.jpg',
+      'kenji_face.JPG'
+      'kenji_facepaint.JPG'
+      'kenji_facepaint_2.JPG'
+      'kenji_majestic.JPG'
+      'kenji_selfie.JPG'
+      'sasha_default.jpg'
+      'sigma_kenji.JPG'
+      'kenji_mcdonalds.jpg'
+    
+    ];
 
     const boxSize = 10; // Size of each grid square
     let snake = [{ x: 200, y: 200 }]; // Snake starts in the middle
@@ -148,6 +164,10 @@
 
     // Show overlay temporarily
     function showOverlay() {
+      // Select a random image
+      const randomImage = overlayImages[Math.floor(Math.random() * overlayImages.length)];
+      overlay.style.backgroundImage = `url('${randomImage}')`;
+
       overlay.style.visibility = "visible";
       overlay.style.opacity = "1";
 
