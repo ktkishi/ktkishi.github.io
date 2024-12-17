@@ -4,10 +4,15 @@ Snake game!!!!!
 ### Snake Gaem
 [SNAKE GAME!!!](snakegame.html)
 
+snake game v1.5
+-made Alex™ scoring background an overlay
+-Qol updates
+
 snake game v1.4
 BIGGEST UPDATE YET!!
 -added custom Kenji™ background
 -added Alex™ scoring background
+-Qol updates
 
 snake game v1.3
 -removed pink and green
