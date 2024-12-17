@@ -5,7 +5,7 @@ Snake game!!!!!
 [SNAKE GAME!!!](snakegame.html)
 
 snake game v1.5
--made Alex™ scoring background an overlay
+-made Alex™ scoring background an overlay (very cool)
 -Qol updates
 
 snake game v1.4
