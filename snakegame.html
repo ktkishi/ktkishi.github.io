@@ -14,6 +14,7 @@
       background-size: 100% 100%;
       margin: 0;
       padding: 0;
+      transition: background-image 0.5s ease;
     }
 
     h1 {
@@ -41,6 +42,9 @@
     let food = randomFood(); // Food starts at a random position
     let direction = "RIGHT"; // Starting direction
     let score = 0;
+
+    const defaultBackground = 'url("kenji_face.JPG")'; // Default background
+    const scoreBackground = 'url("alex_face.jpg")'; // New background on scoring
 
     // Generate random food position
     function randomFood() {
@@ -86,6 +90,7 @@
       if (head.x === food.x && head.y === food.y) {
         score++;
         food = randomFood(); // Generate new food
+        changeBackground(); // Temporarily change background
       } else {
         snake.pop(); // Remove the tail if no food is eaten
       }
@@ -123,6 +128,14 @@
       if (key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
     });
 
+    // Temporarily change background
+    function changeBackground() {
+      document.body.style.backgroundImage = scoreBackground; // Set the new background
+      setTimeout(() => {
+        document.body.style.backgroundImage = defaultBackground; // Reset to default after 1 second
+      }, 1000); // 1 second delay
+    }
+    
     // Run the game loop
     function gameLoop() {
       update();
