@@ -118,20 +118,26 @@
       if (direction === "RIGHT") head.x += boxSize;
 
       // Check if the snake eats any food
+      let foodEaten = false;
       for (let i = 0; i < foods.length; i++) {
         if (head.x === foods[i].x && head.y === foods[i].y) {
           score++;
           foods[i] = randomFood(); // Replace eaten food
+          foodEaten = true; // Mark that food was eaten
           showOverlay(); // Show overlay
           break;
         }
       }
 
+      // Add the head to the snake
       snake.unshift(head);
-      if (!foods.some(food => head.x === food.x && head.y === food.y)) {
-        snake.pop(); // Remove the tail if no food was eaten
+
+      // If no food was eaten, remove the tail
+      if (!foodEaten) {
+        snake.pop();
       }
 
+      // Check for collisions
       if (
         head.x < 0 ||
         head.y < 0 ||
