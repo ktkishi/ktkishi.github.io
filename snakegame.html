@@ -75,9 +75,15 @@
 
     const boxSize = 10; // Size of each grid square
     let snake = [{ x: 200, y: 200 }]; // Snake starts in the middle
-    let food = randomFood(); // Food starts at a random position
+    let foods = []; // Array to store food items
     let direction = "RIGHT"; // Starting direction
     let score = 0;
+
+    // Generate a random number of food items between 1 and 4
+    function initializeFoods() {
+      const foodCount = Math.floor(Math.random() * 4) + 1; // Random number between 1 and 4
+      foods = Array.from({ length: foodCount }, randomFood);
+    }
 
     // Generate random food position
     function randomFood() {
@@ -99,9 +105,11 @@
         ctx.strokeRect(segment.x, segment.y, boxSize, boxSize);
       });
 
-      // Draw the food
+      // Draw the foods
       ctx.fillStyle = "#dc3545";
-      ctx.fillRect(food.x, food.y, boxSize, boxSize);
+      foods.forEach(food => {
+        ctx.fillRect(food.x, food.y, boxSize, boxSize);
+      });
 
       // Draw the score
       ctx.fillStyle = "#333";
@@ -119,10 +127,12 @@
       if (direction === "LEFT") head.x -= boxSize;
       if (direction === "RIGHT") head.x += boxSize;
 
-      // Check if the snake eats the food
-      if (head.x === food.x && head.y === food.y) {
+      // Check if the snake eats any food
+      const foodIndex = foods.findIndex(food => head.x === food.x && head.y === food.y);
+      if (foodIndex !== -1) {
         score++;
-        food = randomFood(); // Generate new food
+        foods.splice(foodIndex, 1); // Remove the eaten food
+        foods.push(randomFood()); // Add a new food
         showOverlay(); // Show overlay temporarily
       } else {
         snake.pop(); // Remove the tail if no food is eaten
@@ -149,7 +159,7 @@
       snake = [{ x: 200, y: 200 }];
       direction = "RIGHT";
       score = 0;
-      food = randomFood();
+      initializeFoods();
     }
 
     // Change the direction of the snake
@@ -182,6 +192,8 @@
       draw();
     }
 
+    // Initialize game
+    initializeFoods();
     setInterval(gameLoop, 150); // Run the game every 150ms
   </script>
 </body>
