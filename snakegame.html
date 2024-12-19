@@ -73,12 +73,13 @@
       'kenji_mcdonalds.jpg'
     ];
 
-    const boxSize = 10;
-    let snake = [{ x: 200, y: 200 }];
-    let foods = [randomFood(), randomFood()];
-    let direction = "RIGHT";
+    const boxSize = 10; // Size of each grid square
+    let snake = [{ x: 200, y: 200 }]; // Snake starts in the middle
+    let food = randomFood(); // Food starts at a random position
+    let direction = "RIGHT"; // Starting direction
     let score = 0;
 
+    // Generate random food position
     function randomFood() {
       return {
         x: Math.floor(Math.random() * (canvas.width / boxSize)) * boxSize,
@@ -86,6 +87,7 @@
       };
     }
 
+    // Draw the game
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -97,11 +99,9 @@
         ctx.strokeRect(segment.x, segment.y, boxSize, boxSize);
       });
 
-      // Draw the foods
-      foods.forEach(food => {
-        ctx.fillStyle = "#dc3545";
-        ctx.fillRect(food.x, food.y, boxSize, boxSize);
-      });
+      // Draw the food
+      ctx.fillStyle = "#dc3545";
+      ctx.fillRect(food.x, food.y, boxSize, boxSize);
 
       // Draw the score
       ctx.fillStyle = "#333";
@@ -109,29 +109,29 @@
       ctx.fillText(`Score: ${score}`, 10, 25);
     }
 
+    // Update the game state
     function update() {
       const head = { ...snake[0] };
 
+      // Move the head based on the current direction
       if (direction === "UP") head.y -= boxSize;
       if (direction === "DOWN") head.y += boxSize;
       if (direction === "LEFT") head.x -= boxSize;
       if (direction === "RIGHT") head.x += boxSize;
 
-      // Check if the snake eats any food
-      for (let i = 0; i < foods.length; i++) {
-        if (head.x === foods[i].x && head.y === foods[i].y) {
-          score++;
-          foods[i] = randomFood(); // Replace eaten food
-          showOverlay(); // Show overlay
-          break;
-        }
+      // Check if the snake eats the food
+      if (head.x === food.x && head.y === food.y) {
+        score++;
+        food = randomFood(); // Generate new food
+        showOverlay(); // Show overlay temporarily
+      } else {
+        snake.pop(); // Remove the tail if no food is eaten
       }
 
+      // Add the new head to the snake
       snake.unshift(head);
-      if (!foods.some(food => head.x === food.x && head.y === food.y)) {
-        snake.pop(); // Remove the tail if no food was eaten
-      }
 
+      // Check for collisions with walls or itself
       if (
         head.x < 0 ||
         head.y < 0 ||
@@ -144,13 +144,15 @@
       }
     }
 
+    // Reset the game
     function resetGame() {
       snake = [{ x: 200, y: 200 }];
       direction = "RIGHT";
       score = 0;
-      foods = [randomFood(), randomFood()]; // Reset the foods array
+      food = randomFood();
     }
 
+    // Change the direction of the snake
     document.addEventListener("keydown", event => {
       const key = event.key;
       if (key === "ArrowUp" && direction !== "DOWN") direction = "UP";
@@ -159,24 +161,28 @@
       if (key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
     });
 
+    // Show overlay temporarily
     function showOverlay() {
+      // Select a random image
       const randomImage = overlayImages[Math.floor(Math.random() * overlayImages.length)];
       overlay.style.backgroundImage = `url('${randomImage}')`;
+
       overlay.style.visibility = "visible";
       overlay.style.opacity = "1";
 
       setTimeout(() => {
         overlay.style.opacity = "0";
         overlay.style.visibility = "hidden";
-      }, 1000);
+      }, 1000); // Show for 1 second
     }
 
+    // Run the game loop
     function gameLoop() {
       update();
       draw();
     }
 
-    setInterval(gameLoop, 150);
-</script>
+    setInterval(gameLoop, 150); // Run the game every 150ms
+  </script>
 </body>
 </html>
