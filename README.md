@@ -27,17 +27,20 @@ Snake game!!!!!
 -QoL updates
 
 <b>snake game v1.6</b>
+
 -added multiple Kenji™ face overlays as well as other assorted overlay pictures
 
 -QoL updates
 
 <b>snake game v1.5</b>
+ 
 -made Alex™ scoring background an overlay (very cool)
 
 -QoL updates
 
 <b>snake game v1.4</b>
 BIGGEST UPDATE YET!!
+
 -added custom Kenji™ background
 
 -added Alex™ scoring background
@@ -45,6 +48,7 @@ BIGGEST UPDATE YET!!
 -QoL updates
 
 <b>snake game v1.3</b>
+
 -removed pink and green
 
 -Code improvements
@@ -52,6 +56,7 @@ BIGGEST UPDATE YET!!
 -QoL updates
 
 <b>snake game v1.2</b>
+
 -Added beautiful pink background to replace drab grey
 
 -Added beautiful green to add some zap to the boring colours
