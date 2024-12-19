@@ -76,7 +76,7 @@
 
     const boxSize = 10; // Size of each grid square
     let snake = [{ x: 200, y: 200 }]; // Snake starts in the middle
-    let food = randomFood(); // Food starts at a random position
+    let foods = [randomFood(), randomFood()]; // Two food items
     let direction = "RIGHT"; // Starting direction
     let score = 0;
 
@@ -100,10 +100,11 @@
         ctx.strokeRect(segment.x, segment.y, boxSize, boxSize);
       });
 
-      // Draw the food
+       // Draw both food items
+      foods.forEach(food => {
       ctx.fillStyle = "#dc3545";
       ctx.fillRect(food.x, food.y, boxSize, boxSize);
-
+     
       // Draw the score
       ctx.fillStyle = "#333";
       ctx.font = "20px Comic Sans MS";
