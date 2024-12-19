@@ -5,45 +5,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pain and Suffering</title>
   <style>
-    html, body {
-  height: 100%;  /* Make the body and html elements cover the full height */
-  margin: 0;     /* Remove default margin */
-  padding: 0;    /* Remove default padding */
-  overflow: hidden; /* Prevent scrolling */
-}
+    body {
+      font-family: Comic Sans MS, cursive;
+      text-align: center;
+      background-image: url('kenji_face.JPG');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 100% 100%;
+      margin: 0;
+      padding: 0;
+    }
 
-body {
-  font-family: Comic Sans MS, cursive;
-  text-align: center;
-  background-image: url('kenji_face.JPG');
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;  /* Stretch the background to cover the screen */
-  margin: 0;
-  padding: 0;
-}
+    h1 {
+      margin-top: 20px;
+      color: #333;
+    }
 
-#overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw; /* Ensure overlay spans full viewport width */
-  height: 100vh; /* Ensure overlay spans full viewport height */
-  background-repeat: no-repeat;
-  background-size: cover;  /* Stretch overlay image */
-  background-position: center;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease, visibility 0s linear 0.5s;
-  z-index: 2;
-}
+    canvas {
+      border: 2px solid #333;
+      background-color: #e8e8e8;
+      display: block;
+      margin: 20px auto;
+    }
 
-#gameContainer {
-  position: relative;
-  z-index: 1;
-  width: 100vw; /* Ensure the game container spans the full width */
-  height: 100vh; /* Ensure the game container spans the full height */
-}
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: no-repeat center center/cover;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0s linear 0.5s;
+      z-index: 2;
+    }
+
+    #gameContainer {
+      position: relative;
+      z-index: 1;
+    }
   </style>
 </head>
 <body>
@@ -72,19 +73,12 @@ body {
       'kenji_mcdonalds.jpg'
     ];
 
-    const boxSize = 10; // Size of each grid square
-    let snake = [{ x: 200, y: 200 }]; // Snake starts in the middle
-    let foods = []; // Array to store food items
-    let direction = "RIGHT"; // Starting direction
+    const boxSize = 10;
+    let snake = [{ x: 200, y: 200 }];
+    let foods = [randomFood(), randomFood()];
+    let direction = "RIGHT";
     let score = 0;
 
-    // Generate a random number of food items between 1 and 4
-    function initializeFoods() {
-      const foodCount = Math.floor(Math.random() * 4) + 1; // Random number between 1 and 4
-      foods = Array.from({ length: foodCount }, randomFood);
-    }
-
-    // Generate random food position
     function randomFood() {
       return {
         x: Math.floor(Math.random() * (canvas.width / boxSize)) * boxSize,
@@ -92,7 +86,6 @@ body {
       };
     }
 
-    // Draw the game
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -105,8 +98,8 @@ body {
       });
 
       // Draw the foods
-      ctx.fillStyle = "#dc3545";
       foods.forEach(food => {
+        ctx.fillStyle = "#dc3545";
         ctx.fillRect(food.x, food.y, boxSize, boxSize);
       });
 
@@ -116,31 +109,29 @@ body {
       ctx.fillText(`Score: ${score}`, 10, 25);
     }
 
-    // Update the game state
     function update() {
       const head = { ...snake[0] };
 
-      // Move the head based on the current direction
       if (direction === "UP") head.y -= boxSize;
       if (direction === "DOWN") head.y += boxSize;
       if (direction === "LEFT") head.x -= boxSize;
       if (direction === "RIGHT") head.x += boxSize;
 
       // Check if the snake eats any food
-      const foodIndex = foods.findIndex(food => head.x === food.x && head.y === food.y);
-      if (foodIndex !== -1) {
-        score++;
-        foods.splice(foodIndex, 1); // Remove the eaten food
-        foods.push(randomFood()); // Add a new food
-        showOverlay(); // Show overlay temporarily
-      } else {
-        snake.pop(); // Remove the tail if no food is eaten
+      for (let i = 0; i < foods.length; i++) {
+        if (head.x === foods[i].x && head.y === foods[i].y) {
+          score++;
+          foods[i] = randomFood(); // Replace eaten food
+          showOverlay(); // Show overlay
+          break;
+        }
       }
 
-      // Add the new head to the snake
       snake.unshift(head);
+      if (!foods.some(food => head.x === food.x && head.y === food.y)) {
+        snake.pop(); // Remove the tail if no food was eaten
+      }
 
-      // Check for collisions with walls or itself
       if (
         head.x < 0 ||
         head.y < 0 ||
@@ -153,15 +144,13 @@ body {
       }
     }
 
-    // Reset the game
     function resetGame() {
       snake = [{ x: 200, y: 200 }];
       direction = "RIGHT";
       score = 0;
-      initializeFoods();
+      foods = [randomFood(), randomFood()]; // Reset the foods array
     }
 
-    // Change the direction of the snake
     document.addEventListener("keydown", event => {
       const key = event.key;
       if (key === "ArrowUp" && direction !== "DOWN") direction = "UP";
@@ -170,30 +159,24 @@ body {
       if (key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
     });
 
-    // Show overlay temporarily
     function showOverlay() {
-      // Select a random image
       const randomImage = overlayImages[Math.floor(Math.random() * overlayImages.length)];
       overlay.style.backgroundImage = `url('${randomImage}')`;
-
       overlay.style.visibility = "visible";
       overlay.style.opacity = "1";
 
       setTimeout(() => {
         overlay.style.opacity = "0";
         overlay.style.visibility = "hidden";
-      }, 1000); // Show for 1 second
+      }, 1000);
     }
 
-    // Run the game loop
     function gameLoop() {
       update();
       draw();
     }
 
-    // Initialize game
-    initializeFoods();
-    setInterval(gameLoop, 150); // Run the game every 150ms
+    setInterval(gameLoop, 150);
   </script>
 </body>
 </html>
