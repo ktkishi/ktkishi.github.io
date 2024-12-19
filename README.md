@@ -4,6 +4,10 @@ Snake game!!!!!
 ### Snake Gaem
 [SNAKE GAME!!!](snakegame.html)
 
+snake game v1.7
+-now randomizes amount of food every time
+-fixed overlay stretching
+
 snake game v1.6
 -added multiple Kenji™ face overlays as well as other assorted overlay pictures
 -QoL updates
