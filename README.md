@@ -4,9 +4,19 @@ Snake game!!!!!
 ### Snake Gaem
 [SNAKE GAME!!!](snakegame.html)
 
+<b>snake game v1.9</b>
+
+-resized images to 1280x720
+
+-fixed visual bugs
+
+-QoL updates
+
 <b>snake game v1.8</b>
 
 -sped up game speed
+
+-QoL updates
 
 <b>snake game v1.7</b> 
 
