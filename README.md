@@ -5,9 +5,11 @@ Snake game!!!!!
 [SNAKE GAME!!!](snakegame.html)
 
 <b>snake game v1.8</b>
+
 -sped up game speed
 
 <b>snake game v1.7</b> 
+
 -now randomizes amount of food every time
 
 -fixed overlay stretching
